@@ -74,7 +74,7 @@ function generateTiles(data) {
 				'</div>',
 				'<div class="hover-block">',
 				'<a href="http://www.google.com"><button class="add-to-cart" target="_blank">ADD TO CART</button></a>',
-				'<a href="http://www.google.com"><button class="view-detail">VIEW DETAILS</button></a>',
+				'<a href="/content/obs/india/english/product_detail.html?bookId=',data[x].id,'"><button class="view-detail">VIEW DETAILS</button></a>',
 				'</div>'].join("\n");
         if(data[x].isBestSeller){
 				html+='<div class="bestseller-label"><img src="https://www.sapnaonline.com/static/images/sapna/bestseller.svg"></div>';

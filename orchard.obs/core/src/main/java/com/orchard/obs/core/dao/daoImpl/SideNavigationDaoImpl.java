@@ -118,6 +118,7 @@ public class SideNavigationDaoImpl implements SideNavigationDao {
 			resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
 				Book book = new Book();
+				book.setId(resultSet.getString("BOOKID"));
 				book.setName(resultSet.getString("NAME"));
 				book.setLanguage(resultSet.getString("LANGUAGE"));
 				book.setPrice(resultSet.getFloat("PRICE"));
@@ -174,7 +175,7 @@ public class SideNavigationDaoImpl implements SideNavigationDao {
 
 			while (resultSet.next()) {
 				Book book = new Book();
-
+				book.setId(resultSet.getString("BOOKID"));
 				book.setName(resultSet.getString("NAME"));
 				book.setLanguage(resultSet.getString("LANGUAGE"));
 				book.setPrice(resultSet.getFloat("PRICE"));
@@ -231,7 +232,7 @@ public class SideNavigationDaoImpl implements SideNavigationDao {
 
 			while (resultSet.next()) {
 				Book book = new Book();
-
+				book.setId(resultSet.getString("BOOKID"));
 				book.setName(resultSet.getString("NAME"));
 				book.setLanguage(resultSet.getString("LANGUAGE"));
 				book.setPrice(resultSet.getFloat("PRICE"));
