@@ -22,7 +22,7 @@ xhttp.onreadystatechange = function() {
      var message=this.responseText;
      if(success==message){
      	alert(message);
-     	window.location("Login.html");
+     	window.location("/content/obs/india/english/login.html");
      }
      else{
      	alert(message);
