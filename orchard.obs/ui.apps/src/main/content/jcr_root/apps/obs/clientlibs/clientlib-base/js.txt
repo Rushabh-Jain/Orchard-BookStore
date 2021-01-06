@@ -1,8 +1,1 @@
 #base=js
-
-sideNavigation.js
-register.js
-productdetails.js
-wishlist.js
-cart.js
-login.js
