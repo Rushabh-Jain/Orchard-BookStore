@@ -115,7 +115,7 @@
         border: 1px solid #FFD700;
         color: #FFD700;
     }
-    #log-btn{
+    #reg-btn{
         background-color: white;
   color: black;
   text-align: center;
@@ -125,7 +125,7 @@
 margin-left: 240px;
         cursor: pointer;
     }
-    #log-btn:hover{
+    #reg-btn:hover{
         background-color: black;
         color: white;
         border:1px solid #FFD700;
