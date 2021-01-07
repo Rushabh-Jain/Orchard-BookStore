@@ -7,11 +7,11 @@
 	list-style-type:none;
 }
 .sideNav-ul li{
-	font-family:Monospace;
+	font-family:sans seriff;
 	font-size:18px;
 }
 .sideNav-ul li a:hover {
-	color:cyan;
+	color:#77BE13;
 }
 .sideNav-Background{
     background-color:white;

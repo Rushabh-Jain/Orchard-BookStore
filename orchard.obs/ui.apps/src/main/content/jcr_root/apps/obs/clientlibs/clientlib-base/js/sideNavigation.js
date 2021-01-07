@@ -73,7 +73,7 @@ function generateTiles(data) {
 				'<img src="/content/dam/obs/en/images/books/',data[x].name,'.jpg">',
 				'</div>',
 				'<div class="hover-block">',
-				'<a href="http://www.google.com"><button class="add-to-cart" target="_blank">ADD TO CART</button></a>',
+				'<button onclick="addToCartFromPLP(',data[x].id,')" class="add-to-cart">ADD TO CART</button>',
 				'<a href="/content/obs/india/english/product_detail.html?bookId=',data[x].id,'"><button class="view-detail">VIEW DETAILS</button></a>',
 				'</div>'].join("\n");
         if(data[x].isBestSeller){
@@ -95,4 +95,35 @@ function generateTiles(data) {
 	}
 	html += '</section>';
 	document.getElementById("ab").innerHTML = html;
+}
+function addToCartFromPLP(bookId){
+    var customerId = null;
+		var name = "customerId" + "=";
+    	var ca = document.cookie.split(';');
+
+  		for(var i = 0; i < ca.length; i++) {
+    		var c = ca[i];
+    		while (c.charAt(0) == ' ') {
+      			c = c.substring(1);
+    		}
+    		if (c.indexOf(name) == 0) {
+      			customerId = c.substring(name.length, c.length);
+    		}
+  		}
+    if(customerId != null) {
+
+	url = "/bin/obs/bookservlet?bookId=" + bookId + "&action=addtocart&customerId=" +customerId;
+
+    var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+
+
+		}
+	};
+	xhttp.open("POST", url, true);
+	xhttp.send();}
+    else{
+        window.location="/content/obs/india/english/login.html";
+    }
 }
