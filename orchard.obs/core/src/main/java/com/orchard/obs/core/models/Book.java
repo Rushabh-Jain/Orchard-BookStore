@@ -3,6 +3,7 @@ package com.orchard.obs.core.models;
 import java.util.List;
 
 public class Book {
+	private String id;
 	private String name;
 	private float price;
 	private List<String> authors;
@@ -15,8 +16,9 @@ public class Book {
 		super();
 	}
 
-	public Book(String name, float price, List<String> authors, String language,float discount,boolean isNew,boolean isBestSeller) {
+	public Book(String id,String name, float price, List<String> authors, String language,float discount,boolean isNew,boolean isBestSeller) {
 		super();
+		this.id=id;
 		this.name = name;
 		this.price = price;
 		this.authors = authors;
@@ -24,6 +26,20 @@ public class Book {
 		this.discount=discount;
 		this.isNew=isNew;
 		this.isBestSeller=isBestSeller;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	/**
