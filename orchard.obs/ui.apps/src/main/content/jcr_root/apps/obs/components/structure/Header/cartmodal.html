@@ -1,9 +1,8 @@
 <!--sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html"
 data-sly-call="${clientlib.all @ categories='obs.base'}"/-->
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-$.fn.fetchCartData = function(customerId) {
+$.fn.fetchCartModalData = function(customerId) {
 	$.ajax({
 		url: '/bin/obs/cartservlet',
 		type: 'POST',
@@ -13,20 +12,19 @@ $.fn.fetchCartData = function(customerId) {
         },
 		complete: function(xhr, status) {
         	if (status == "success") {
-            	alert(xhr.responseText);
             	cartData = JSON.parse(xhr.responseText);
-                $(this).loadCartData(cartData, customerId);
+                $(this).loadCartModalData(cartData, customerId);
             }
             else {
-            	$("#cart-message-block").show();
-                $("#cart-message-block").css("background-color", "red");
-            	$("#message").text("something went wrong");
+            	$("#cartmodal-message-block").show();
+                $("#cartmodal-message-block").css("background-color", "red");
+            	$("#cartmodal-message").text("something went wrong");
           	}
 		}
 	});
 }
 
-$.fn.updateCartData = function(index, quantity, customerId) {
+$.fn.updateCartModalData = function(index, quantity, customerId) {
 	$.ajax({
 		url: '/bin/obs/cartservlet',
 		type: 'POST',
@@ -40,13 +38,13 @@ $.fn.updateCartData = function(index, quantity, customerId) {
         	if (status == "success") {
             	if(xhr.responseText > 0) {
                 	cartData[index].cartQuantity = quantity;
-                    $(this).loadCartData(cartData, customerId);
+                    $(this).loadCartModalData(cartData, customerId);
                 }
             }
             else {
-            	$("#cart-message-block").show();
-                $("#cart-message-block").css("background-color", "red");
-            	$("#message").text("something went wrong");
+            	$("#cartmodal-message-block").show();
+                $("#cartmodal-message-block").css("background-color", "red");
+            	$("#cartmodal-message").text("something went wrong");
           	}
 		}
 	});
@@ -66,30 +64,30 @@ $.fn.addToWishlist = function(index, customerId) {
 				complete: function(xhr, status) {
         			if (status == "success") {
             			if(xhr.responseText > 0) {
-                			$("#cart-message-block").show();
-        					$("#cart-message-block").css("background-color", "green");
-        					$("#message").text("Successfully Saved To Wishlist");
+                			$("#cartmodal-message-block").show();
+        					$("#cartmodal-message-block").css("background-color", "green");
+        					$("#cartmodal-message").text("Successfully Saved To Wishlist");
                         	$(obj).text("GO TO WISHLIST");
                 		}
                     	else {
-                    		$("#cart-message-block").show();
-                			$("#cart-message-block").css("background-color", "red");
-            				$("#message").text("Failed To Add Book To Wishlist");
+                    		$("#cartmodal-message-block").show();
+                			$("#cartmodal-message-block").css("background-color", "red");
+            				$("#cartmodal-message").text("Failed To Add Book To Wishlist");
                 		}
            			}
             		else {
-            			$("#cart-message-block").show();
-                		$("#cart-message-block").css("background-color", "red");
-            			$("#message").text("something went wrong");
+            			$("#cartmodal-message-block").show();
+                		$("#cartmodal-message-block").css("background-color", "red");
+            			$("#cartmodal-message").text("something went wrong");
           			}
 				}
 			});
     	} else {
-		window.location = "wishlist.html";
+		document.location.href = "/content/obs/in/en/menu/mywishlist.html";
    	}
 }
 
-$.fn.removeCartItem = function(index, customerId) {
+$.fn.removeCartModalItem = function(index, customerId) {
 	$.ajax({
 		url: '/bin/obs/cartservlet',
 		type: 'POST',
@@ -103,21 +101,21 @@ $.fn.removeCartItem = function(index, customerId) {
             	if(xhr.responseText > 0) {
 					cartData.splice(index, 1);
                     if(cartData.length != 0)
-                    	$(this).loadCartData(cartData, customerId);
+                    	$(this).loadCartModalData(cartData, customerId);
                    	else
                     	$("#myModal").hide();
                 }
             }
             else {
-            	$("#cart-message-block").show();
-                $("#cart-message-block").css("background-color", "red");
-            	$("#message").text("something went wrong");
+            	$("#cartmodal-message-block").show();
+                $("#cartmodal-message-block").css("background-color", "red");
+            	$("#cartmodal-message").text("something went wrong");
           	}
 		}
 	});
 }
 
-$.fn.loadCartData = function(cartData, customerId) {
+$.fn.loadCartModalData = function(cartData, customerId) {
    	$("#cartmodal-block").remove();
 	if(cartData.length != 0) {
         $(".modal").css("display", "block");
@@ -162,13 +160,13 @@ $.fn.loadCartData = function(cartData, customerId) {
                     '</div>',
                     '<div class="item-block-second-div">',
                     	'<div class="item-quantity-block">',
-                        	'<button class="minus" id="m' + index + '" onclick="$(this).updateCartData(' + index + ',' + (item.cartQuantity-1) + ',\'' + customerId + '\');"> - </button>',
+                        	'<button class="minus" id="m' + index + '" onclick="$(this).updateCartModalData(' + index + ',' + (item.cartQuantity-1) + ',\'' + customerId + '\');"> - </button>',
                             '<input class="item-count" id="q' + index + '" type="number" min="1" onkeypress="return event.keyCode > 48 && event.keyCode < 57" value=' + item.cartQuantity + '>',
-                            '<button class="plus" id="p' + index + '" onclick="$(this).updateCartData(' + index + ',' + (item.cartQuantity+1) + ',\'' + customerId + '\');"> + </button>',
+                            '<button class="plus" id="p' + index + '" onclick="$(this).updateCartModalData(' + index + ',' + (item.cartQuantity+1) + ',\'' + customerId + '\');"> + </button>',
                         '</div>',
                         '<div class="item-save-remove">',
                         	'<div class="item-save-later" id=atc' + index + ' onclick="$(this).addToWishlist(' + index + ',\'' + customerId + '\')">ADD TO WISHLIST</div>',
-                            '<div class="item-remove" onclick="$(this).removeCartItem(' + index + ',\'' + customerId + '\')">REMOVE</div>',
+                            '<div class="item-remove" onclick="$(this).removeCartModalItem(' + index + ',\'' + customerId + '\')">REMOVE</div>',
                         '</div>',
                     '</div>',
                	'</div>'
@@ -245,8 +243,12 @@ $.fn.loadCartData = function(cartData, customerId) {
             $("button").css("background-color", "grey");
         }
 	}
-    else
-    	alert("Cart Is Empty!...");
+    else {
+    	$("#cartmodal-message-block").show();
+        $("#cartmodal-message-block-close").hide();
+        $("#cartmodal-message-block").css("background-color", "red");
+        $("#cartmodal-message").text("Cart Is Empty!...");
+    }
 }
 
 $.fn.close = function() {
@@ -260,11 +262,11 @@ $(window).click(function(e) {
 });
 
 $.fn.placeOrder = function(customerId) {
-    window.location = "order.html?" + customerId;
+	document.location.href = "/content/obs/in/en/menu/bookworm/order.html?" + customerId;
 }
 
-$.fn.closeMessageBlock = function() {
-	$("#cart-message-block").hide();
+$.fn.closeCartModalMessageBlock = function() {
+	$("#cartmodal-message-block").hide();
 };
 </script>
 
@@ -273,9 +275,9 @@ $.fn.closeMessageBlock = function() {
 	<!-- Modal content -->
     <div class="modal-content">
         <span class="close" onclick="$(this).close();">&times;</span>
-    	<div id="cart-message-block">
-			<span id="message"></span>
-			<span id="close" onclick="$(this).closeMessageBlock();">&times;</span>
+    	<div id="cartmodal-message-block">
+			<span id="cartmodal-message"></span>
+			<span id="cartmodal-message-block-close" onclick="$(this).closeCartModalMessageBlock();">&times;</span>
 		</div>
     </div>
 </div>
@@ -307,7 +309,7 @@ $.fn.closeMessageBlock = function() {
   margin: auto;
 }
 
-#cart-message-block {
+#cartmodal-message-block {
 	display: none;
 	background-color: red;
    	padding: 1%;
@@ -316,12 +318,12 @@ $.fn.closeMessageBlock = function() {
     border-radius: 5px;
 }
 
-#message {
+#cartmodal-message {
 	color: white;
     font-size: 18px;
 }
 
-#close {
+#cartmodal-message-block-close {
 	float: right;
     color: white;
     font-size: 22px;
