@@ -1,15 +1,15 @@
 <sly data-sly-use.clientLib="/libs/granite/sightly/templates/clientlib.html"
 data-sly-call="${clientlib.all @ categories='obs.base'}"/>
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" -->
 
 <sly data-sly-include="cartmodal.html" data-sly-unwrap></sly>
 <sly data-sly-use.header="com.orchard.obs.core.models.Header"></sly>
 
 <head>
 <div class="head">
-	<img src="/content/dam/obs/en/images/icon.png"  alt="bookstore logo"  id="logo" height=200px width:200px />
+	<img src="/content/dam/obs/en/images/icon4.png" alt="bookstore logo" id="logo" />
     <div class="head-right">
 		<ul>
         	<li class="dropdown" data-sly-repeat="${header.pages}">
@@ -23,16 +23,16 @@ data-sly-call="${clientlib.all @ categories='obs.base'}"/>
 		</ul>
 	</div>
 
-	<ul>
+	<ul class="navcart">
 		<li class="dropdown">
-    		<!--a href="login.html"--><i class="fa fa-user-circle" style="font-size:30px;" ></i><!--/a-->
+    		<a><i class="fa fa-user-circle" style="font-size:30px;" ></i></a>
       		<ul  class="dropdown-content">
-        		<li><a>Profile</a></li>
-            	<li id="login-btn" onclick="$(this).login()"><a>Login</a></li>
-            	<li id="logout-btn" onclick="$(this).logout()"><a>Logout</a></li>
+        		<li id="profile-button"><a>Profile</a></li>
+            	<li id="login-button" onclick="$(this).login()"><a>Login</a></li>
+            	<li id="logout-button" onclick="$(this).logout()"><a>Logout</a></li>
         	</ul>
 		</li>
-    	<li id="cart" onclick="$(this).cart()"> <!--a href="cart.html"--><i class="fa fa-shopping-cart" style="font-size:30px;" ></i><!--/a--></li>
+    	<a><li class="dropdown" id="cart" onclick="$(this).cart()"><i class="fa fa-shopping-cart" style="font-size:30px;" ></i></a></li>
 	</ul>
 </div>
 </head>
@@ -64,19 +64,21 @@ $(function() {
 
 	$.fn.cart = function() {
     	if(customerId == null) {
-        	alert("Please Login!..");
+        	document.location.href = "/content/obs/in/en/menu/bookworm/login.html";
         }
         else
-        	$(this).fetchCartData(customerId);
+        	$(this).fetchCartModalData(customerId);
     }
 
 	if(customerId != null) {
-		$("#login-btn").css("display", "none");
-		$("#logout-btn").css("display", "inline-block");
+		$("#login-button").hide();
+        $("#profile-button").show();
+		$("#logout-button").show();
     }
     else {
-        $("#login-btn").css("display", "inline-block");
-		$("#logout-btn").css("display", "none");
+        $("#login-button").show();
+        $("#profile-button").hide();
+		$("#logout-button").hide();
     }
 });
 </script>
