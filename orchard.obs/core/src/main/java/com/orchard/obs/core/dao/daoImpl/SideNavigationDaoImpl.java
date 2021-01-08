@@ -16,9 +16,8 @@ import com.day.commons.datasource.poolservice.DataSourceNotFoundException;
 import com.day.commons.datasource.poolservice.DataSourcePool;
 import com.orchard.obs.Exceptions.daoexceptions.SideNavigationDaoException;
 import com.orchard.obs.core.dao.SideNavigationDao;
-import com.orchard.obs.core.models.Book;
+import com.orchard.obs.core.entity.Book;
 import com.orchard.obs.core.services.SideNavigationServices;
-import com.orchard.obs.core.util.DBConnectionUtil;
 import com.orchard.obs.core.util.DBUtil;
 
 @Component(immediate = true, service = SideNavigationDao.class)
@@ -94,7 +93,7 @@ public class SideNavigationDaoImpl implements SideNavigationDao {
 	}
 
 	@Override
-	public List<Book> getBookBasedOnGenre(String dataSourceName, String genre) throws SideNavigationDaoException {
+	public List<Book> getBookBasedOnGenre(String dataSourceName, String genre,String customerId) throws SideNavigationDaoException {
 		Connection connection;
 		try {
 			connection = dbConnectionUtil.getConnection(dataSourceName);
@@ -105,8 +104,10 @@ public class SideNavigationDaoImpl implements SideNavigationDao {
 		}
 		Statement statement = null;
 		Statement statement1 = null;
+		Statement statement2=null;
 		ResultSet resultSet = null;
 		ResultSet resultSet1 = null;
+		ResultSet resultSet2 = null;
 		List<Book> books = new ArrayList<>();
 		try {
 			logger.info("Inside getBookBasedOnGenre method");
@@ -121,10 +122,11 @@ public class SideNavigationDaoImpl implements SideNavigationDao {
 				book.setId(resultSet.getString("BOOKID"));
 				book.setName(resultSet.getString("NAME"));
 				book.setLanguage(resultSet.getString("LANGUAGE"));
-				book.setPrice(resultSet.getFloat("PRICE"));
+				book.setPrice(resultSet.getInt("PRICE"));
 				book.setNew(resultSet.getBoolean("NEWITEM"));
-				book.setDiscount(resultSet.getFloat("DISCOUNT"));
+				book.setDiscount(resultSet.getInt("DISCOUNT"));
 				book.setBestSeller(resultSet.getBoolean("BESTSELLER"));
+				
 				statement1 = connection.createStatement();
 				query = "SELECT DISTINCT AUTHOR.AUTHORNAME FROM AUTHOR INNER JOIN AUTHOR_BOOK ON AUTHOR.AUTHORID=AUTHOR_BOOK.AUTHORID WHERE AUTHOR_BOOK.BOOKID='"
 						+ resultSet.getString("BOOKID") + "'";
@@ -135,13 +137,20 @@ public class SideNavigationDaoImpl implements SideNavigationDao {
 					authors.add(resultSet1.getString("AUTHORNAME"));
 				}
 				book.setAuthors(authors);
+				statement2 = connection.createStatement();
+				resultSet2 = statement2.executeQuery("SELECT * FROM CART WHERE BOOKID = '" + resultSet.getString("BOOKID") + "' AND CUSTOMER_ID = '" + customerId + "';");
+				if (resultSet2.next())
+					book.setPresentInCart(true);
+				
 				books.add(book);
 			}
 		} catch (Exception e) {
 			logger.error("Error Occured  While Establishing The Connection : " + e);
 		} finally {
+			dbConnectionUtil.closeResource(resultSet2);
 			dbConnectionUtil.closeResource(resultSet1);
 			dbConnectionUtil.closeResource(resultSet);
+			dbConnectionUtil.closeResource(statement2);
 			dbConnectionUtil.closeResource(statement1);
 			dbConnectionUtil.closeResource(statement);
 			dbConnectionUtil.closeResource(connection);
@@ -150,7 +159,7 @@ public class SideNavigationDaoImpl implements SideNavigationDao {
 	}
 
 	@Override
-	public List<Book> getBookBasedOnPublisher(String dataSourceName, String publisher) throws SideNavigationDaoException {
+	public List<Book> getBookBasedOnPublisher(String dataSourceName, String publisher,String customerId) throws SideNavigationDaoException {
 		Connection connection;
 		try {
 			connection = dbConnectionUtil.getConnection(dataSourceName);
@@ -161,8 +170,10 @@ public class SideNavigationDaoImpl implements SideNavigationDao {
 		}
 		Statement statement = null;
 		Statement statement1 = null;
+		Statement statement2=null;
 		ResultSet resultSet = null;
 		ResultSet resultSet1 = null;
+		ResultSet resultSet2 = null;
 		List<Book> books = new ArrayList<>();
 		try {
 			logger.info("Inside getBookBasedOnPublisher method");
@@ -178,9 +189,9 @@ public class SideNavigationDaoImpl implements SideNavigationDao {
 				book.setId(resultSet.getString("BOOKID"));
 				book.setName(resultSet.getString("NAME"));
 				book.setLanguage(resultSet.getString("LANGUAGE"));
-				book.setPrice(resultSet.getFloat("PRICE"));
+				book.setPrice(resultSet.getInt("PRICE"));
 				book.setNew(resultSet.getBoolean("NEWITEM"));
-				book.setDiscount(resultSet.getFloat("DISCOUNT"));
+				book.setDiscount(resultSet.getInt("DISCOUNT"));
 				book.setBestSeller(resultSet.getBoolean("BESTSELLER"));
 				statement1 = connection.createStatement();
 				query = "SELECT DISTINCT AUTHOR.AUTHORNAME FROM AUTHOR INNER JOIN AUTHOR_BOOK ON AUTHOR.AUTHORID=AUTHOR_BOOK.AUTHORID WHERE AUTHOR_BOOK.BOOKID='"
@@ -192,12 +203,17 @@ public class SideNavigationDaoImpl implements SideNavigationDao {
 					authors.add(resultSet1.getString("AUTHORNAME"));
 				}
 				book.setAuthors(authors);
+				statement2 = connection.createStatement();
+				resultSet2 = statement2.executeQuery("SELECT * FROM CART WHERE BOOKID = '" + resultSet.getString("BOOKID") + "' AND CUSTOMER_ID = '" + customerId + "';");
+				if (resultSet.next())
+					book.setPresentInCart(true);
 
 				books.add(book);
 			}
 		} catch (Exception e) {
 			logger.error("Error Occured  While Establishing The Connection : " + e);
 		} finally {
+			dbConnectionUtil.closeResource(resultSet2);
 			dbConnectionUtil.closeResource(resultSet1);
 			dbConnectionUtil.closeResource(resultSet);
 			dbConnectionUtil.closeResource(statement1);
@@ -208,7 +224,7 @@ public class SideNavigationDaoImpl implements SideNavigationDao {
 	}
 
 	@Override
-	public List<Book> getBookBasedOnGenreAndPublisher(String dataSourceName, String genre, String publisher) throws SideNavigationDaoException {
+	public List<Book> getBookBasedOnGenreAndPublisher(String dataSourceName, String genre, String publisher,String customerId) throws SideNavigationDaoException {
 		Connection connection;
 		try {
 			connection = dbConnectionUtil.getConnection(dataSourceName);
@@ -219,8 +235,10 @@ public class SideNavigationDaoImpl implements SideNavigationDao {
 		}
 		Statement statement = null;
 		Statement statement1 = null;
+		Statement statement2=null;
 		ResultSet resultSet = null;
 		ResultSet resultSet1 = null;
+		ResultSet resultSet2 = null;
 		List<Book> books = new ArrayList<>();
 		try {
 			logger.info("INISDE getBookBasedOnGenreAndPublisher METHOD");
@@ -235,9 +253,9 @@ public class SideNavigationDaoImpl implements SideNavigationDao {
 				book.setId(resultSet.getString("BOOKID"));
 				book.setName(resultSet.getString("NAME"));
 				book.setLanguage(resultSet.getString("LANGUAGE"));
-				book.setPrice(resultSet.getFloat("PRICE"));
+				book.setPrice(resultSet.getInt("PRICE"));
 				book.setNew(resultSet.getBoolean("NEWITEM"));
-				book.setDiscount(resultSet.getFloat("DISCOUNT"));
+				book.setDiscount(resultSet.getInt("DISCOUNT"));
 				book.setBestSeller(resultSet.getBoolean("BESTSELLER"));
 				statement1 = connection.createStatement();
 				query = "SELECT AUTHOR.AUTHORNAME FROM AUTHOR INNER JOIN AUTHOR_BOOK ON AUTHOR.AUTHORID=AUTHOR_BOOK.AUTHORID WHERE AUTHOR_BOOK.BOOKID='"
@@ -248,14 +266,20 @@ public class SideNavigationDaoImpl implements SideNavigationDao {
 					authors.add(resultSet1.getString("AUTHORNAME"));
 				}
 				book.setAuthors(authors);
+				statement2 = connection.createStatement();
+				resultSet2 = statement2.executeQuery("SELECT * FROM CART WHERE BOOKID = '" + resultSet.getString("BOOKID") + "' AND CUSTOMER_ID = '" + customerId + "';");
+				if (resultSet.next())
+					book.setPresentInCart(true);
 				
 				books.add(book);
 			}
 		} catch (Exception e) {
 			logger.error("Error Occured  While Establishing The Connection : " + e);
 		} finally {
+			dbConnectionUtil.closeResource(resultSet2);
 			dbConnectionUtil.closeResource(resultSet1);
 			dbConnectionUtil.closeResource(resultSet);
+			dbConnectionUtil.closeResource(statement2);
 			dbConnectionUtil.closeResource(statement1);
 			dbConnectionUtil.closeResource(statement);
 			dbConnectionUtil.closeResource(connection);
