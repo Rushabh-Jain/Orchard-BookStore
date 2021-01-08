@@ -43,7 +43,7 @@ public class Header
     @PostConstruct
     protected void init() {
         PageManager pageManager = resourceResolver.adaptTo(PageManager.class);
-        Page currentPage = pageManager.getPage("/content/obs/india/english"); // Add Your Path
+        Page currentPage = pageManager.getPage("/content/obs/in/en"); // Add Your Path
         Iterator<Page> childPages = currentPage.listChildren(null, false);
                 
         pages = new ArrayList<PageList>();
