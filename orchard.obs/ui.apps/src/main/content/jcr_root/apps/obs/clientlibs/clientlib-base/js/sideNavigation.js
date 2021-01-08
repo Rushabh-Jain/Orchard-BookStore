@@ -74,7 +74,7 @@ function generateTiles(data) {
 				'</div>',
 				'<div class="hover-block">',
 				'<button onclick="addToCartFromPLP(',data[x].id,')" class="add-to-cart">ADD TO CART</button>',
-				'<a href="/content/obs/india/english/product_detail.html?bookId=',data[x].id,'"><button class="view-detail">VIEW DETAILS</button></a>',
+				'<a href="/content/obs/india/english/menu/bookworm/productdetail.html?bookId=',data[x].id,'"><button class="view-detail">VIEW DETAILS</button></a>',
 				'</div>'].join("\n");
         if(data[x].isBestSeller){
 				html+='<div class="bestseller-label"><img src="https://www.sapnaonline.com/static/images/sapna/bestseller.svg"></div>';
@@ -124,6 +124,6 @@ function addToCartFromPLP(bookId){
 	xhttp.open("POST", url, true);
 	xhttp.send();}
     else{
-        window.location="/content/obs/india/english/login.html";
+        window.location="/content/obs/india/english/menu/bookworm/login.html";
     }
 }
