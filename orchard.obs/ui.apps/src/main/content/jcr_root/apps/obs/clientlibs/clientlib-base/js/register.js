@@ -22,7 +22,7 @@ xhttp.onreadystatechange = function() {
      var message=this.responseText;
      if(success==message){
      	alert(message);
-     	window.location("/content/obs/india/english/login.html");
+     	document.location.href="/content/obs/in/en/menu/bookworm/login.html";
      }
      else{
      	alert(message);

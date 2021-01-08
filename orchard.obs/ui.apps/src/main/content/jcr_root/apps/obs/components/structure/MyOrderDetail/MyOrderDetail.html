@@ -48,7 +48,7 @@ bagtotal+=(pro[i].price*pro[i].quantity);
                                                     '<div class="product-img col-2">',
                                                         '<a href="">',
                                                             '<img',
-                                                                'src=""',
+                                                                'src="/content/dam/obs/en/images/books/' + pro[i].name + '.jpg"',
                                                                 'alt="Book"',
                                                                 'title="Book"',
                                                            ' />',
@@ -79,6 +79,7 @@ bagtotal+=(pro[i].price*pro[i].quantity);
                                          $("#orderDetail").append(item_block);
 
         }
+        document.getElementById("name1").innerHTML = cust.name;
         document.getElementById("name").innerHTML = cust.name;
          document.getElementById("address").innerHTML = cust.address;
          document.getElementById("mob").innerHTML = cust.phone;
@@ -123,7 +124,7 @@ bagtotal+=(pro[i].price*pro[i].quantity);
                                     <span class="shipment-info"></span>
                                     <div class="status-section">
                                         <div class="status-first">
-                                            <div class="items-consignment"><span class="status-ic ic-shipped-dispatch"></span>Arriving by 07 January</div>
+                                            <div class="items-consignment"><span class="status-ic ic-shipped-dispatch"></span>Arriving within 2-3 Days</div>
 
                                             <div class="rex-section"></div>
                                         </div>
@@ -158,7 +159,7 @@ bagtotal+=(pro[i].price*pro[i].quantity);
                             <label>Deliver to</label>
                             <div class="mobaddr-box inactive-address">
                                 <div class="address-info-wrapper">
-                                    <span class="address-book-user-name" id="name">Kirti Pandey</span>
+                                    <span class="address-book-user-name" id="name1">Siddharth Das</span>
                                     <div class="default-address-tag tan-color"></div>
                                     <div class="address-info">
                                         <div class="" id="address">M/31 Railway Colony, Dhanpuri no. 3,</div>
@@ -174,7 +175,7 @@ bagtotal+=(pro[i].price*pro[i].quantity);
                 </div>
             </div>
         </div>
-    </div>
+   </div>
 </div>
 
 
@@ -347,13 +348,7 @@ code {
 a > code {
     color: inherit;
 }
-.container {
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-}
+
 @media (min-width: 576px) {
     .container {
         max-width: 540px;
@@ -909,10 +904,10 @@ a > code {
     }
 }
 .box-margin {
-    margin-top: 10px;
+    margin-top: 0px;
 }
 .account-container {
-    margin-top: 100px;
+    margin-top: 10px;
 }
 #dAccountWrapper {
     margin: 0 auto;

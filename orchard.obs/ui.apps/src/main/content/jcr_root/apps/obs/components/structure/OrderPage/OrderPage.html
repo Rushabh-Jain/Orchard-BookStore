@@ -63,7 +63,7 @@ tot=tot+disPrice;
                     '<div class="productBlock  clearfix" id="productBlockClearfix">',
 '<div class="productBlock__img">',
 '<div class="aspectContainer loadingAnimation">',
-'<img src="" class="img-responsive b-error b-error" alt="Book">',
+'<img src="/content/dam/obs/en/images/books/' + item[i].name + '.jpg" class="img-responsive b-error b-error" alt="Book">',
 '</div>',
 '</div>',
 '<div class="productBlock__desc">',
@@ -109,7 +109,7 @@ $.fn.placeOrder=function(){
         complete: function(xhr,status){
          var obj = JSON.parse(xhr.responseText);
 var conf=customerId+'&'+obj;
-document.location.href="/content/obs/en/OrderConfirmation.html?"+conf;
+document.location.href="/content/obs/in/en/menu/bookworm/OrderConfirmation.html?"+conf;
 
 
          }
@@ -130,6 +130,8 @@ document.location.href="/content/obs/en/OrderConfirmation.html?"+conf;
     $("#shippingDetails").show();
   });
 });
+
+
 
 </script>
 
@@ -245,7 +247,7 @@ document.location.href="/content/obs/en/OrderConfirmation.html?"+conf;
 <div class="row">
 <div class="col-lg-3 col-md-4 col-sm-3">
 <h4 class="panel-title font-14">
-3. Shipping Details
+2. Shipping Details
 </h4>
 </div>
 <div class="col-lg-9 col-md-8 col-sm-9">
@@ -257,11 +259,11 @@ document.location.href="/content/obs/en/OrderConfirmation.html?"+conf;
 <path class="a_tick" d="M-6197-13683.726l4.275,4.276,8.552-8.552" transform="translate(6197.53 13688.531)"></path>
 </svg>
 <span class="panel_detail_label">Default Address : </span><span class="panel_detail_value"></span>
-<a data-toggle="collapse" data-parent="#accordion_spc" href="#shippingDetails" class="">Edit</a>
+<a data-toggle="collapse" data-parent="#accordion_spc" href="#shippingDetails" class=""></a>
 </div>
 <span id="shipping_address_label">
 <input style="display: none;" type="checkbox" class="" id="chkCustomerNewShippingAddress">
-<label style="float: right; text-decoration: underline; cursor: pointer;" for="chkCustomerNewShippingAddress" class="info_text font-12">Add new shipping address</label>
+
 </span>
 </div>
 </div>
@@ -360,7 +362,7 @@ document.location.href="/content/obs/en/OrderConfirmation.html?"+conf;
 <div class="saved_addressDetails pull-left">
 <div class="user_address font-12">
 <p class="user_name font-14" id="name">Kirti Pandey</p>
-<p class="address_alias font-12">home </p><a  class="edit_address">Edit</a>
+<p class="address_alias font-12">home </p>
 <p class="default_address font-11" style="display:none;">Default Address</p>
 <p id="fullAdd">M/31 Railway colony Dhanpuri</p>
 <p id="pinCityState">484114 Shahdol M.P.</p>
@@ -393,7 +395,7 @@ document.location.href="/content/obs/en/OrderConfirmation.html?"+conf;
 <div class="row">
 <div class="col-lg-3 col-md-4 col-sm-3">
 <h4 class="panel-title font-14">
-4. Payment Options
+3. Payment Options
 </h4>
 </div>
 <div class="col-lg-9 col-md-8 col-sm-9">
