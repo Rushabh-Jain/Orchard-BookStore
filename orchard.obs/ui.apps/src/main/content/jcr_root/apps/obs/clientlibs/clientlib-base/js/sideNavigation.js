@@ -26,7 +26,7 @@ function deleteCookie(name){
 	document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
 }
 function getFilteredBook(name, filter) {
-	
+
 	if (filter.localeCompare("all")==0){
 		url = "/bin/FilterBookServlet?first=" + name + "&second=" + filter;
 		deleteCookie('customObject');
@@ -63,18 +63,20 @@ function getFilteredBook(name, filter) {
 }
 function generateTiles(data) {
 	var html = '<section id="products">';
-	for (x in data) {
 
+    var productDetailsPage = ("" + window.location.href + "").substr(21, 18);
+
+	for (x in data) {
 		html += [
-				'<section class="product-tile">',
+            '<section class="product-tile" style="margin-top: 40px;">',
 				'<div class="product-block">',
 				'<div class="image-block">',
 				'<div class="product-image">',
-				'<img src="/content/dam/obs/en/images/books/',data[x].name,'.jpg">',
+            '<img src="/content/dam/obs/en/images/books/',data[x].name,'.jpg">',
 				'</div>',
 				'<div class="hover-block">',
-				'<button onclick="addToCartFromPLP(',data[x].id,')" class="add-to-cart">ADD TO CART</button>',
-				'<a href="/content/obs/india/english/menu/bookworm/productdetail.html?bookId=',data[x].id,'"><button class="view-detail">VIEW DETAILS</button></a>',
+				'<button onclick="addToCartFromPLP(',data[x].id,')" class="add-to-cart" id=' + data[x].id + '>ADD TO CART</button>',
+				'<a href="' + productDetailsPage + '/menu/bookworm/productdetail.html?bookId=',data[x].id,'"><button class="view-detail">VIEW DETAILS</button></a>',
 				'</div>'].join("\n");
         if(data[x].isBestSeller){
 				html+='<div class="bestseller-label"><img src="https://www.sapnaonline.com/static/images/sapna/bestseller.svg"></div>';
@@ -94,7 +96,10 @@ function generateTiles(data) {
 				html+='</div></section>' ;
 	}
 	html += '</section>';
-	document.getElementById("ab").innerHTML = html;
+    document.getElementById("ab").innerHTML = "<center><label style='font-weight: bold; font-size: 18px;'>Buy The Best Books</label></center>" + html;
+
+    /* if(data[x].isPresentInCart) 
+			$("#" + data[x].id + "").text("GO TO CART"); */
 }
 function addToCartFromPLP(bookId){
     var customerId = null;
@@ -110,6 +115,11 @@ function addToCartFromPLP(bookId){
       			customerId = c.substring(name.length, c.length);
     		}
   		}
+
+    if($("#" + bookId + "").text() == "GO TO CART") {
+		window.location=("" + window.location.href + "").substr(21, 18) + "/menu/mycart.html";
+    }
+
     if(customerId != null) {
 
 	url = "/bin/obs/bookservlet?bookId=" + bookId + "&action=addtocart&customerId=" +customerId;
@@ -117,13 +127,12 @@ function addToCartFromPLP(bookId){
     var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-
-
+			$("#" + bookId + "").text("GO TO CART");
 		}
 	};
 	xhttp.open("POST", url, true);
 	xhttp.send();}
     else{
-        window.location="/content/obs/india/english/menu/bookworm/login.html";
+        window.location= ("" + window.location.href + "").substr(21, 18) + "/menu/bookworm/login.html";
     }
 }
