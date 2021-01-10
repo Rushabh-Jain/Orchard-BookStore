@@ -7,16 +7,17 @@
 	background-color: red;
    	padding: 1%;
     text-align: center;
+    margin-top: 1%;
     margin-bottom: 1%;
     border-radius: 5px;
 }
 
-#message {
+#product-details-message {
 	color: white;
     font-size: 18px;
 }
 
-#close {
+#product-details-message-block-close {
 	float: right;
     color: white;
     font-size: 22px;
@@ -28,6 +29,7 @@
     display: flex;
     margin-left: 5%;
     margin-right: 5%;
+    margin-top: 1%;
     border: 1px solid lightgrey;
     line-height: 1.8;
 }
@@ -121,8 +123,8 @@
 </style>
 
 <div id="product-details-message-block">
-	<span id="message"></span>
-	<span id="close">&times;</span>
+	<span id="product-details-message"></span>
+	<span id="product-details-message-block-close">&times;</span>
 </div>
 <div id="product-desc">
     <div id="product-desc-left">
@@ -132,7 +134,7 @@
         <div id="buttons-block">
             <button id="add-to-cart">ADD TO CART</button>
             <!--button id="add-to-wishlist">ADD TO WISHLIST</button-->
-            <button id="buy-now">BUY NOW</button>
+            <!--button id="buy-now">BUY NOW</button-->
         </div>
     </div>
     <div id="product-desc-right">
@@ -179,7 +181,6 @@ $(function() {
 	bookId = params.get('bookId');
 
 	if(bookId != null) {
-
 		var customerId = null;
 		var name = "customerId" + "=";
     	var ca = document.cookie.split(';');
@@ -224,7 +225,9 @@ $(function() {
                     }
            		}
             	else {
-            		alert("Error");
+            		$("#product-details-message-block").show();
+                	$("#product-details-message-block").css("background-color", "red");
+            		$("#product-details-message").text("Something Went Wrong");
 
             	}
 			}
@@ -246,26 +249,26 @@ $(function() {
                 				if(xhr.responseText > 0) {
                                 	$("#product-details-message-block").show();
                 					$("#product-details-message-block").css("background-color", "green");
-            						$("#message").text("Successfully Added To Cart");
+            						$("#product-details-message").text("Successfully Added To Cart");
                                     $("#add-to-cart").text("GO TO CART");
                    				}
                				}
                 			else {
                             	$("#product-details-message-block").show();
                 				$("#product-details-message-block").css("background-color", "red");
-            					$("#message").text("Failed To Add Book To Cart");
+            					$("#product-details-message").text("Failed To Add Book To Cart");
                 			}
 		 				}
 					});
                 }
                 else {
-					window.location = "cart.html";
+					document.location.href = "/content/obs/in/en/menu/mycart.html";
                 }
             }
             else {
             	$("#product-details-message-block").show();
                 $("#product-details-message-block").css("background-color", "red");
-            	$("#message").text("Please Login To Add Book To Cart!...");
+            	$("#product-details-message").text("Please Login To Add Book To Cart!...");
             }
 		});
 
@@ -315,19 +318,19 @@ $(function() {
             else {
                 $("#product-details-message-block").show();
                 $("#product-details-message-block").css("background-color", "red");
-            	$("#message").text("Please Login To Buy Book!...");
+            	$("#product-details-message").text("Please Login To Buy Book!...");
             }
 		});
 
-        $("#close").click(function() {
+        $("#product-details-message-block-close").click(function() {
         	$("#product-details-message-block").hide();
         });
 	}
     else {
     	$("#product-details-message-block").show();
-        $("#close").hide();
+        $("#product-details-message-block-close").hide();
         $("#product-desc").hide();
-    	$("#message").text("No Page Found...");
+    	$("#product-details-message").text("No Page Found...");
     }
 });
 </script>
