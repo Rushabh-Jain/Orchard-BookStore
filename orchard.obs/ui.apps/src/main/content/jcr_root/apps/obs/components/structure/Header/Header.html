@@ -14,7 +14,7 @@ data-sly-call="${clientlib.all @ categories='obs.base'}"/>
         	<li class="dropdown" data-sly-repeat="${header.pages}">
 				<a  class="childPage" href="${item.path}.html">${item.title}</a>
              	<ul class="dropdown-content">
-            		<li data-sly-repeat="${item.childPages}">
+            		<li data-sly-repeat="${item.childPages}" style="z-index: 100;">
 				 		<a class="subChildPage" href="${item.path}.html">${item.title}</a>
              		</li>
              	</ul>
