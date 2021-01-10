@@ -6,17 +6,16 @@ data-sly-call="${clientlib.all @ categories='obs.base'}"/>
 
 <sly data-sly-include="cartmodal.html" data-sly-unwrap></sly>
 <sly data-sly-use.header="com.orchard.obs.core.models.Header"></sly>
-
 <head>
 <div class="head">
 	<img src="/content/dam/obs/en/images/icon.png" alt="bookstore logo" id="logo" />
     <div class="head-right">
 		<ul>
         	<li class="dropdown" data-sly-repeat="${header.pages}">
-            	<a  href="${item.path}.html">${item.title}</a>
+				<a  class="childPage" href="${item.path}.html">${item.title}</a>
              	<ul class="dropdown-content">
-            		<li data-sly-repeat="${item.childPages}">
-				 		<a href="${item.path}.html">${item.title}</a>
+            		<li data-sly-repeat="${item.childPages}" style="z-index: 100;">
+				 		<a class="subChildPage" href="${item.path}.html">${item.title}</a>
              		</li>
              	</ul>
         	</li>
@@ -54,7 +53,7 @@ $(function() {
   	}
 
     $.fn.login = function() {
-    	document.location.href = "/content/obs/in/en/menu/bookworm/login.html";
+    	window.location.href = "${currentPage.getPath @context='uri'}".substr(0, 18) + "/menu/bookworm/login.html";
     }
 
    	$.fn.logout = function() {
@@ -64,7 +63,7 @@ $(function() {
 
 	$.fn.cart = function() {
     	if(customerId == null) {
-        	document.location.href = "/content/obs/in/en/menu/bookworm/login.html";
+    		window.location.href = "${currentPage.getPath @context='uri'}".substr(0, 18) + "/menu/bookworm/login.html";
         }
         else
         	$(this).fetchCartModalData(customerId);
@@ -80,5 +79,15 @@ $(function() {
         $("#profile-button").hide();
 		$("#logout-button").hide();
     }
+
+    $(".childPage").each(function() {
+        var url = "" + $(this).attr("href") + "";
+    	$(this).attr("href", "${currentPage.getPath @context='uri'}".substr(0, 18) + url.substr(18));
+    });
+
+	$(".subChildPage").each(function() {
+        var url = "" + $(this).attr("href") + "";
+    	$(this).attr("href", "${currentPage.getPath @context='uri'}".substr(0, 18) + url.substr(18));
+    });
 });
 </script>
