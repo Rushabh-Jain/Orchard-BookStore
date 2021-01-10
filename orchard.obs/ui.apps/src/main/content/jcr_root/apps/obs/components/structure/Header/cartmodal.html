@@ -353,10 +353,7 @@ $.fn.removeCartModalItem = function(index, customerId) {
         	if (status == "success") {
             	if(xhr.responseText > 0) {
 					cartData.splice(index, 1);
-                    if(cartData.length != 0)
-                    	$(this).loadCartModalData(cartData, customerId);
-                   	else
-                    	$("#myModal").hide();
+                    $(this).loadCartModalData(cartData, customerId);
                 }
             }
             else {
@@ -372,6 +369,8 @@ $.fn.loadCartModalData = function(cartData, customerId) {
    	$("#cartmodal-block").remove();
 	if(cartData.length != 0) {
         $(".modal").css("display", "block");
+        $(".modal-content").css("height", "250px")
+        $("#cartmodal-message-block").hide();
         var totalPrice = 0, totalDiscount = 0, deliveryCharge = 0, totalAmount = 0, totalAmountSaved = 0;
         var cartBlock = [
            	'<div id="cartmodal-block">',
@@ -499,7 +498,7 @@ $.fn.loadCartModalData = function(cartData, customerId) {
     else {
         $(".modal").show();
         $(".modal::-webkit-scrollbar").css("width", "0");
-        $(".modal-content").css("height", "35px")
+        $(".modal-content").css("height", "35px");
     	$("#cartmodal-message-block").show();
         $("#cartmodal-message-block-close").hide();
         $("#cartmodal-message-block").css("background-color", "red");
