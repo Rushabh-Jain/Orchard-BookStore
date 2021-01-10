@@ -109,7 +109,7 @@ $(function() {
 				}
 			});
     	} else {
-		 	document.location.href = "/content/obs/in/en/menu/mywishlist.html";
+		 	window.location.href = "${currentPage.getPath @context='uri'}" + "/../mywishlist.html";
    		}
 	}
 
@@ -174,8 +174,8 @@ $(function() {
                                 	'</div>',
                             	'</div>',
                             	'<div class="delivery-detail-block">',
-                                	'<div class="delivery-detail">Delivery in 3 - 5 days | ₹50</div>',
-                                	'<div class="replacement-policy">7 Days Replacement Policy</div>',
+                                	'<div class="delivery-detail">Delivery in 3 - 5 days</div>',
+                                	'<div class="replacement-policy">8 Days Replacement Policy</div>',
                             	'</div>',
                         	'</div>',
                         	'<div class="item-block-second-div">',
@@ -265,12 +265,16 @@ $(function() {
             $("button").css("background-color", "grey");
         }
 		}
-    	else
-    		$("#cart-block").html("<h3>Cart Is Empty!...</h3>");
+    	else {
+    		$("#cart-message-block").show();
+        	$("#cart-message-block-close").hide();
+            $("#cart-message-block").css("background-color", "red");
+           	$("#cart-message").text("Cart Is Empty!...");
+    	}
 	}
 
     $.fn.placeOrder = function(customerId) {
-		document.location.href = "/content/obs/in/en/menu/bookworm/order.html?" + customerId;
+    	window.location.href = "${currentPage.getPath @context='uri'}" + "/../bookworm/order.html?" + customerId;
 	}
 
     $.fn.closeCartMessageBlock = function() {
