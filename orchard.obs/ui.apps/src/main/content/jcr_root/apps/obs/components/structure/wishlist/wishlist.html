@@ -1,7 +1,6 @@
 <!--sly data-sly-use.clientLib="/libs/granite/sightly/templates/clientlib.html"></sly>
 <sly data-sly-call="${clientLib.all @ categories='obs.base'}"></sly-->
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 	$(function() {
 		var customerId = null;
@@ -22,9 +21,9 @@
     	}
     	else {
         	$("#wishlist-message-block").show();
-            $("#close").hide();
+            $("#wishlist-message-block-close").hide();
             $("#wishlist-message-block").css("background-color", "red");
-           	$("#message").text("Please Login!...");
+           	$("#wishlist-message").text("Please Login!...");
     	}
 	});
 
@@ -44,7 +43,7 @@
                 else {
                 	$("#wishlist-message-block").show();
                 	$("#wishlist-message-block").css("background-color", "red");
-            		$("#message").text("something went wrong");
+            		$("#wishlist-message").text("something went wrong");
                	}
 		 	}
 	  	});
@@ -66,20 +65,20 @@
                 		if(xhr.responseText > 0) {
                         	$("#wishlist-message-block").show();
                 			$("#wishlist-message-block").css("background-color", "green");
-            				$("#message").text("Successfully Added To Cart");
+            				$("#wishlist-message").text("Successfully Added To Cart");
                             $(obj).text("GO TO CART");
                    		}
                		}
                 	else {
                     	$("#wishlist-message-block").show();
                 		$("#wishlist-message-block").css("background-color", "red");
-            			$("#message").text("Failed To Add Book To Cart");
+            			$("#wishlist-message").text("Failed To Add Book To Cart");
                 	}
 		 		}
 			});
         }
         else {
-			window.location = "cart.html";
+			document.location.href = "/content/obs/in/en/menu/mycart.html";
         }
     }
 
@@ -102,7 +101,7 @@
                 else {
                 	$("#wishlist-message-block").show();
                 	$("#wishlist-message-block").css("background-color", "red");
-            		$("#message").text("Failed To Remove Book From Wishlist");
+            		$("#wishlist-message").text("Failed To Remove Book From Wishlist");
                 }
 		 	}
 		});
@@ -111,7 +110,6 @@
 	$.fn.loadWishlistData = function(wishlistData, customerId) {
    		$("#wishlist-block").empty();
 		if(wishlistData.length != 0) {
-        	$(".modal").css("display", "block");
         	var totalPrice = 0, totalDiscount = 0, deliveryCharge = 0, totalAmount = 0, totalAmountSaved = 0;
         	var cartBlock = [
             	'<div id="header">',
@@ -145,7 +143,7 @@
                             	'</div>',
                             '</div>',
                             '<div class="delivery-detail-block">',
-                                '<div class="delivery-detail">Delivery in 3 - 5 days | ₹66</div>',
+                                '<div class="delivery-detail">Delivery in 3 - 5 days | ₹50</div>',
                                 '<div class="replacement-policy">7 Days Replacement Policy</div>',
                             '</div>',
                         '</div>',
@@ -165,9 +163,9 @@
 		}
 		else {
             $("#wishlist-message-block").show();
-            $("#close").hide();
+            $("#wishlist-message-block-close").hide();
             $("#wishlist-message-block").css("background-color", "red");
-           	$("#message").text("Wishlist Is Empty!...");
+           	$("#wishlist-message").text("Wishlist Is Empty!...");
       	}
 
 		$.fn.closeMessageBlock = function() {
@@ -177,27 +175,30 @@
 </script>
 
 <div id="wishlist-message-block">
-	<span id="message"></span>
-	<span id="close" onclick="$(this).closeMessageBlock();">&times;</span>
+	<span id="wishlist-message"></span>
+	<span id="wishlist-message-block-close" onclick="$(this).closeMessageBlock();">&times;</span>
 </div>
 <div id="wishlist-block"></div>
 
 <style>
+*{
+	font-family: sans-serif;
+}
 #wishlist-message-block {
 	display: none;
 	background-color: red;
    	padding: 1%;
     text-align: center;
-    margin-bottom: 1%;
+    margin-top: 1%;
     border-radius: 5px;
 }
 
-#message {
+#wishlist-message {
 	color: white;
     font-size: 18px;
 }
 
-#close {
+#wishlist-message-block-close {
 	float: right;
     color: white;
     font-size: 22px;
@@ -208,6 +209,7 @@
 #wishlist-block {
 	width: 80%;
     margin: auto;
+    margin-top: 2%;
 }
 
 #header, .item-block {            
